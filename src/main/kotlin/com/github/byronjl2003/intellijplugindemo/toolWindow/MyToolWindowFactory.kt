@@ -1,15 +1,12 @@
 package com.github.byronjl2003.intellijplugindemo.toolWindow
 
-import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
-import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBPanel
+import com.intellij.ui.components.JBTextField
 import com.intellij.ui.content.ContentFactory
-import com.github.byronjl2003.intellijplugindemo.MyBundle
-import com.github.byronjl2003.intellijplugindemo.services.MyProjectService
 import javax.swing.JButton
 
 
@@ -29,15 +26,13 @@ class MyToolWindowFactory : ToolWindowFactory {
 
     class MyToolWindow(toolWindow: ToolWindow) {
 
-        private val service = toolWindow.project.service<MyProjectService>()
-
         fun getContent() = JBPanel<JBPanel<*>>().apply {
-            val label = JBLabel(MyBundle.message("randomLabel", "?"))
+            val textField = JBTextField()
 
-            add(label)
-            add(JButton(MyBundle.message("shuffle")).apply {
+            add(textField)
+            add(JButton("Process").apply {
                 addActionListener {
-                    label.text = MyBundle.message("randomLabel", service.getRandomNumber())
+                    textField.text = "FROM PLUGIN: " + textField.text
                 }
             })
         }
